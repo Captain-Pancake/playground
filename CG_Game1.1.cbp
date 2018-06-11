@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="CG_Game1.1" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/CG_Game1" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add library="exLibs/glew/glew32s.lib" />
+					<Add library="exLibs/glew/glew32.lib" />
+					<Add library="exLibs/glu/glut32.lib" />
+					<Add library="glfw3" />
+					<Add library="gdi32" />
+					<Add library="opengl32" />
+					<Add directory="exLibs/lib-mingw" />
+					<Add directory="exLibs/glew" />
+					<Add directory="exLibs/glu" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/CG_Game1" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add option="-DGLEW_STATIC" />
+			<Add directory="include" />
+		</Compiler>
+		<Linker>
+			<Add library="exLibs/glew-2.0.0/lib/Release/Win32/glew32s.lib" />
+			<Add library="exLibs/glew-2.0.0/lib/Release/Win32/glew32.lib" />
+			<Add library="exLibs/glu/glut32.lib" />
+			<Add library="exLibs/lib-mingw/libglfw3.a" />
+			<Add library="exLibs/lib-mingw/libglfw3dll.a" />
+			<Add library="glu32" />
+			<Add library="opengl32" />
+			<Add directory="exLibs/glew-2.0.0/bin/Release/Win32" />
+			<Add directory="exLibs/glu" />
+			<Add directory="exLibs/lib-mingw" />
+		</Linker>
+		<Unit filename="glad.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

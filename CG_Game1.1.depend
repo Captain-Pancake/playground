@@ -1,0 +1,139 @@
+# depslib dependency file v1.0
+1527504486 source:d:\studium\sose18\computer graphic\game\cg_game1.1\main.cpp
+	"GameManager.h"
+
+1527523597 source:d:\studium\sose18\computer graphic\game\cg_game1.1\src\gamemanager.cpp
+	"GameManager.h"
+
+1527521539 d:\studium\sose18\computer graphic\game\cg_game1.1\include\gamemanager.h
+	<iostream>
+	<GL/glew.h>
+	<GLFW/glfw3.h>
+	<RenderSystem.h>
+
+1471521160 d:\studium\sose18\computer graphic\game\cg_game1.1\include\glfw\glfw3.h
+	<stddef.h>
+	<stdint.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl3ext.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/glcorearb.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl3.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl31.h>
+	<GLES2/gl2ext.h>
+	<vulkan/vulkan.h>
+	<GL/gl.h>
+	<GL/glext.h>
+	<GL/glu.h>
+
+1527524936 d:\studium\sose18\computer graphic\game\cg_game1.1\include\rendersystem.h
+	<iostream>
+	<GL/glew.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<GLFW/glfw3.h>
+	<GL/freeglut_std.h>
+	<GL/freeglut_ext.h>
+	<VertexBuffer.h>
+	<vector>
+	<ShaderInterface.h>
+
+1527525673 source:d:\studium\sose18\computer graphic\game\cg_game1.1\src\rendersystem.cpp
+	"RenderSystem.h"
+	"GL/glu.h"
+	"GL/gl.h"
+	"GL/freeglut.h"
+
+1527706094 source:d:\studium\sose18\computer graphic\game\cg_game1.1\src\vertexbuffer.cpp
+	"VertexBuffer.h"
+
+1527706083 d:\studium\sose18\computer graphic\game\cg_game1.1\include\vertexbuffer.h
+	<iostream>
+	<GL/glew.h>
+	<GLFW/glfw3.h>
+	<GL/glext.h>
+
+1501530382 d:\studium\sose18\computer graphic\game\cg_game1.1\include\gl\glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<Availability.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1527515658 source:d:\studium\sose18\computer graphic\game\cg_game1.1\src\shaderloader.cpp
+	"ShaderLoader.h"
+
+1527515648 d:\studium\sose18\computer graphic\game\cg_game1.1\include\shaderloader.h
+	<iostream>
+	<GL/glew.h>
+	<GLFW/glfw3.h>
+
+1527520714 source:d:\studium\sose18\computer graphic\game\cg_game1.1\src\shaderinterface.cpp
+	"ShaderInterface.h"
+	<stdio.h>
+	<stdlib.h>
+
+1527521544 d:\studium\sose18\computer graphic\game\cg_game1.1\include\shaderinterface.h
+	<iostream>
+	<GL/glew.h>
+	<ShaderLoader.h>
+
+1528733610 source:d:\studium\sose18\computer graphic\game\playground2\main.cpp
+	<iostream>
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+
+1528729616 d:\studium\sose18\computer graphic\game\playground2\include\glad\glad.h
+	<windows.h>
+	<stddef.h>
+	<KHR/khrplatform.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1528729616 d:\studium\sose18\computer graphic\game\playground2\include\khr\khrplatform.h
+	<stdint.h>
+	<inttypes.h>
+	<stdint.h>
+
+1471521160 d:\studium\sose18\computer graphic\game\playground2\include\glfw\glfw3.h
+	<stddef.h>
+	<stdint.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl3ext.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/glcorearb.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl3.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl31.h>
+	<GLES2/gl2ext.h>
+	<vulkan/vulkan.h>
+	<GL/gl.h>
+	<GL/glext.h>
+	<GL/glu.h>
+
+1528729616 source:d:\studium\sose18\computer graphic\game\playground2\glad.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<glad/glad.h>
+	<windows.h>
+	<winapifamily.h>
+	<dlfcn.h>
+
