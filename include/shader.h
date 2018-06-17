@@ -1,5 +1,7 @@
-#ifndef SHADER_H_INCLUDED
-#define SHADER_H_INCLUDED
+
+
+#ifndef SHADER_H
+#define SHADER_H
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -190,5 +192,5 @@ private:
         }
     }
 };
+#endif
 
-#endif // SHADER_H_INCLUDED

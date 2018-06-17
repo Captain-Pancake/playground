@@ -43,6 +43,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 			<Add option="-DGLEW_STATIC" />
 			<Add directory="include" />
@@ -59,10 +60,17 @@
 			<Add directory="exLibs/glu" />
 			<Add directory="exLibs/lib-mingw" />
 		</Linker>
+		<Unit filename="coordinate_systems.fs" />
+		<Unit filename="coordinate_systems.vs" />
 		<Unit filename="glad.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="include/shader.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="shader.fs" />
+		<Unit filename="shader.vs" />
+		<Unit filename="transform.fs" />
+		<Unit filename="transform.vs" />
 		<Extensions>
 			<code_completion />
 			<envvars />
