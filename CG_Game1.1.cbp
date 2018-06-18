@@ -65,10 +65,12 @@
 		<Unit filename="glad.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="include/game.h" />
 		<Unit filename="include/shader.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="shader.fs" />
 		<Unit filename="shader.vs" />
+		<Unit filename="src/game.cpp" />
 		<Unit filename="transform.fs" />
 		<Unit filename="transform.vs" />
 		<Extensions>

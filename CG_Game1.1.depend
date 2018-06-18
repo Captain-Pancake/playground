@@ -86,7 +86,7 @@
 	<GL/glew.h>
 	<ShaderLoader.h>
 
-1529345293 source:d:\studium\sose18\computer graphic\game\playground2\main.cpp
+1529347050 source:d:\studium\sose18\computer graphic\game\playground2\main.cpp
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	<stb_image.h>
@@ -99,6 +99,7 @@
 	<vector>
 	<iostream>
 	<random>
+	"game.h"
 
 1528729616 d:\studium\sose18\computer graphic\game\playground2\include\glad\glad.h
 	<windows.h>
@@ -1819,4 +1820,19 @@
 	<fstream>
 	<sstream>
 	<iostream>
+
+1529346320 d:\studium\sose18\computer graphic\game\playground2\include\gamelogic.h
+
+1529346742 d:\studium\sose18\computer graphic\game\playground2\gamelogic.h
+
+1529347087 d:\studium\sose18\computer graphic\game\playground2\include\game.h
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	<vector>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+
+1529346954 source:d:\studium\sose18\computer graphic\game\playground2\src\game.cpp
+	"game.h"
 
