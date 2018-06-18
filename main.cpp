@@ -10,27 +10,40 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <learnopengl/shader_m.h>
+#include <thread>
+#include <chrono>
+#include <vector>
 
 #include <iostream>
+#include <random>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
+void snakeMovement();
+void snakeTail();
+void snakeEatsTreat();
 
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-        glm::vec3 cubePositions[] = {
+BOOLEAN snake_movement_flag = false;
+short snake_movement_direction=1; //0 rechts, 1 hoch, 2 links, 3 runter
+glm::vec3 tempFirst;
+
+
+        std::vector<glm::vec3> cubePositions = {
+        glm::vec3( 0.0f,  2.0f, 0.0f),
         glm::vec3( 0.0f,  0.0f,  0.0f),
-        glm::vec3( 0.2f,  0.0f,  0.0f),
-        glm::vec3( 0.4f,  0.0f,  0.0f),
-        glm::vec3( 0.6f,  0.0f,  0.0f),
-        glm::vec3( 0.8f,  0.0f,  0.0f),
-        glm::vec3( 1.0f,  0.0f,  0.0f),
-        glm::vec3( 1.2f,  0.0f,  0.0f),
-        glm::vec3( 1.4f,  0.0f,  0.0f),
-        glm::vec3( 1.6f,  0.0f,  0.0f),
-        glm::vec3( 1.8f,  0.0f,  0.0f)
+        glm::vec3( 2.0f,  0.0f,  0.0f),
+        glm::vec3( 4.0f,  0.0f,  0.0f),
+        glm::vec3( 6.0f,  0.0f,  0.0f),
+        glm::vec3( 8.0f,  0.0f,  0.0f),
+        glm::vec3( 10.0f,  0.0f,  0.0f),
+        glm::vec3( 12.0f,  0.0f,  0.0f),
+        glm::vec3( 14.0f,  0.0f,  0.0f),
+        glm::vec3( 16.0f,  0.0f,  0.0f),
+        glm::vec3( 18.0f,  0.0f,  0.0f)
     };
 
 int main()
@@ -41,10 +54,6 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
-#endif
 
     // glfw window creation
     // --------------------
@@ -76,49 +85,49 @@ int main()
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    float counter=0;
+    int counter=0;
     float vertices[] = {
-        -0.05f, -0.05f, -0.05f,  0.0f, 0.0f,
-         0.05f, -0.05f, -0.05f,  0.10f, 0.0f,
-         0.05f,  0.05f, -0.05f,  0.10f, 0.10f,
-         0.05f,  0.05f, -0.05f,  0.10f, 0.10f,
-        -0.05f,  0.05f, -0.05f,  0.0f, 0.10f,
-        -0.05f, -0.05f, -0.05f,  0.0f, 0.0f,
+       -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
-        -0.05f, -0.05f,  0.05f,  0.0f, 0.0f,
-         0.05f, -0.05f,  0.05f,  0.10f, 0.0f,
-         0.05f,  0.05f,  0.05f,  0.10f, 0.10f,
-         0.05f,  0.05f,  0.05f,  0.10f, 0.10f,
-        -0.05f,  0.05f,  0.05f,  0.0f, 0.10f,
-        -0.05f, -0.05f,  0.05f,  0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
-        -0.05f,  0.05f,  0.05f,  0.10f, 0.0f,
-        -0.05f,  0.05f, -0.05f,  0.10f, 0.10f,
-        -0.05f, -0.05f, -0.05f,  0.0f, 0.10f,
-        -0.05f, -0.05f, -0.05f,  0.0f, 0.10f,
-        -0.05f, -0.05f,  0.05f,  0.0f, 0.0f,
-        -0.05f,  0.05f,  0.05f,  0.10f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
-         0.05f,  0.05f,  0.05f,  0.10f, 0.0f,
-         0.05f,  0.05f, -0.05f,  0.10f, 0.10f,
-         0.05f, -0.05f, -0.05f,  0.0f, 0.10f,
-         0.05f, -0.05f, -0.05f,  0.0f, 0.10f,
-         0.05f, -0.05f,  0.05f,  0.0f, 0.0f,
-         0.05f,  0.05f,  0.05f,  0.10f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
 
-        -0.05f, -0.05f, -0.05f,  0.0f, 0.10f,
-         0.05f, -0.05f, -0.05f,  0.10f, 0.10f,
-         0.05f, -0.05f,  0.05f,  0.10f, 0.0f,
-         0.05f, -0.05f,  0.05f,  0.10f, 0.0f,
-        -0.05f, -0.05f,  0.05f,  0.0f, 0.0f,
-        -0.05f, -0.05f, -0.05f,  0.0f, 0.10f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
 
-        -0.05f,  0.05f, -0.05f,  0.0f, 0.10f,
-         0.05f,  0.05f, -0.05f,  0.10f, 0.10f,
-         0.05f,  0.05f,  0.05f,  0.10f, 0.0f,
-         0.05f,  0.05f,  0.05f,  0.10f, 0.0f,
-        -0.05f,  0.05f,  0.05f,  0.0f, 0.0f,
-        -0.05f,  0.05f, -0.05f,  0.0f, 0.10f
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
 
 
@@ -139,7 +148,6 @@ int main()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-
     // load and create a texture
     // -------------------------
     unsigned int texture1, texture2;
@@ -151,12 +159,12 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    unsigned char *data = stbi_load("textures/container.jpg", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("textures/dirt.jpg", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -217,13 +225,17 @@ int main()
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
 
-        // activate shader
+        //activate shader
         ourShader.use();
+        if(counter%5 == 0)
+        {
+            snakeMovement();
+        }
 
         // create transformations
         glm::mat4 view;
         glm::mat4 projection;
-        projection = glm::perspective(glm::radians(400.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 2000.0f);
+        projection = glm::perspective(glm::radians(1400.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.01f, 2000.0f);
         view       = glm::translate(view, glm::vec3(0.0f, 0.0f, -80.0f));
         // pass transformation matrices to the shader
         ourShader.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
@@ -231,12 +243,12 @@ int main()
 
         // render boxes
         glBindVertexArray(VAO);
-        for (unsigned int i = 0; i < 10; i++)
+        for (unsigned int i = 1; i < cubePositions.size(); i++)
         {
             // calculate the model matrix for each object and pass it to shader before drawing
             glm::mat4 model;
             model = glm::translate(model, cubePositions[i]);
-            model = glm::rotate(model,counter, glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::rotate(model,(float)counter, glm::vec3(1.0f, 0.3f, 0.5f));
             ourShader.setMat4("model", model);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -244,15 +256,35 @@ int main()
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
+
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture2);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+
+            glm::mat4 model;
+            model = glm::translate(model, cubePositions[0]);
+            model = glm::rotate(model,(float)counter, glm::vec3(1.0f, 0.3f, 0.5f));
+            ourShader.setMat4("model", model);
+
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
         glfwSwapBuffers(window);
         glfwPollEvents();
         counter++;
+       snakeEatsTreat();
+
+        std::this_thread::sleep_for (std::chrono::milliseconds(5));
     }
 
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
+
+    std::cout<<tempFirst[0]<<"  "<<tempFirst[2]<<"  "<<tempFirst[1]<<std::endl;
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
@@ -270,27 +302,70 @@ void processInput(GLFWwindow *window)
         }
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
     {
-        cubePositions[0][1]=cubePositions[0][1]+0.01;
+        //cubePositions[1][2]=cubePositions[1][2]-0.1;
+        snake_movement_direction=1;
     }
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
     {
-        cubePositions[0][1]=cubePositions[0][1]-0.01;
+        //cubePositions[1][2]=cubePositions[1][2]+0.1;
+        snake_movement_direction=3;
     }
 
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
-        cubePositions[0][2]=cubePositions[0][2]+0.1;
+        //cubePositions[1][0]=cubePositions[1][0]-0.5;
+        snake_movement_direction=2;
     }
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
-        cubePositions[0][2]=cubePositions[0][2]-0.1;
+       // cubePositions[1][0]=cubePositions[1][0]+0.5;
+        snake_movement_direction=0;
     }
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+    {
+        snake_movement_flag = !snake_movement_flag;
 
+    }
+}
 
+void snakeMovement()
+{
+    if(snake_movement_flag){
+        snakeTail();
+        switch(snake_movement_direction)
+        {
+            case 0 : cubePositions[1][0]=cubePositions[1][0]+1;
+            break;
+            case 1 : cubePositions[1][1]=cubePositions[1][1]+1;
+            break;
+            case 2 : cubePositions[1][0]=cubePositions[1][0]-1;
+            break;
+            case 3 : cubePositions[1][1]=cubePositions[1][1]-1;
 
+        }
+    }
+}
 
+void snakeTail(){
 
+    for(unsigned int i=cubePositions.size();i>1;i--)
+    {
+        cubePositions[i][0]=cubePositions[i-1][0];
+        cubePositions[i][1]=cubePositions[i-1][1];
+        cubePositions[i][2]=cubePositions[i-1][2];
+    }
+}
 
+void snakeEatsTreat(){
+
+    if(cubePositions[0][0]==cubePositions[1][0]&&cubePositions[0][1]==cubePositions[1][1]&&cubePositions[0][2]==cubePositions[1][2])
+    {
+        cubePositions[0][0]=rand()%(23+23 + 1) -23;
+        cubePositions[0][1]=rand()%(17+17 + 1) -17;
+        cubePositions[0][2]=0.0f;
+
+        cubePositions.push_back(glm::vec3(0.0f,40.0f,0.0f));
+    }
 
 
 
