@@ -22,6 +22,7 @@ void processInput(GLFWwindow *window);
 void snakeMovement();
 void snakeTail();
 void snakeEatsTreat();
+void gameOverCheck(GLFWwindow* window);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -275,6 +276,7 @@ int main()
         glfwPollEvents();
         counter++;
        snakeEatsTreat();
+       gameOverCheck(window);
 
         std::this_thread::sleep_for (std::chrono::milliseconds(5));
     }
@@ -358,7 +360,8 @@ void snakeTail(){
 
 void snakeEatsTreat(){
 
-    if(cubePositions[0][0]==cubePositions[1][0]&&cubePositions[0][1]==cubePositions[1][1]&&cubePositions[0][2]==cubePositions[1][2])
+   // if(cubePositions[0][0]==cubePositions[1][0]&&cubePositions[0][1]==cubePositions[1][1]&&cubePositions[0][2]==cubePositions[1][2])
+   if(cubePositions[0]==cubePositions[1])
     {
         cubePositions[0][0]=rand()%(23+23 + 1) -23;
         cubePositions[0][1]=rand()%(17+17 + 1) -17;
@@ -366,6 +369,17 @@ void snakeEatsTreat(){
 
         cubePositions.push_back(glm::vec3(0.0f,40.0f,0.0f));
     }
+}
+
+void gameOverCheck(GLFWwindow* window){
+
+if(cubePositions[0][0]>23||cubePositions[0][0]<-23||cubePositions[0][1]>17||cubePositions[0][1]<-17)
+{
+    glfwSetWindowShouldClose(window, true);
+
+}
+
+
 
 
 
