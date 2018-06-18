@@ -24,6 +24,8 @@ void snakeTail();
 void snakeEatsTreat();
 void gameOverCheck(GLFWwindow* window);
 
+int gameOver=0;
+
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -286,7 +288,7 @@ int main()
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 
-    std::cout<<tempFirst[0]<<"  "<<tempFirst[2]<<"  "<<tempFirst[1]<<std::endl;
+    std::cout<<gameOver<<std::endl;
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
@@ -325,7 +327,7 @@ void processInput(GLFWwindow *window)
     }
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
     {
-        snake_movement_flag = !snake_movement_flag;
+        snake_movement_flag = true;
 
     }
 }
@@ -373,16 +375,20 @@ void snakeEatsTreat(){
 
 void gameOverCheck(GLFWwindow* window){
 
-if(cubePositions[0][0]>23||cubePositions[0][0]<-23||cubePositions[0][1]>17||cubePositions[0][1]<-17)
+if(cubePositions[1][0]>23||cubePositions[1][0]<-23||cubePositions[1][1]>17||cubePositions[1][1]<-17)
 {
     glfwSetWindowShouldClose(window, true);
+    gameOver++;
 
 }
 
-
-
-
-
+    for(unsigned int i=cubePositions.size();i>2;i--)
+    {
+        if(cubePositions[1]==cubePositions[i])
+        {
+          glfwSetWindowShouldClose(window, true);
+        }
+    }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
