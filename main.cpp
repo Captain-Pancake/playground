@@ -1,5 +1,4 @@
 
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #define STB_IMAGE_IMPLEMENTATION
@@ -24,6 +23,8 @@ void snakeMovement();
 void snakeTail();
 void snakeEatsTreat();
 extern void gameOverCheck(GLFWwindow* window,std::vector<glm::vec3> cubePositions);
+extern int startGameMenue();
+extern void endGameMenu(int points);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
@@ -53,49 +54,7 @@ glm::vec3 tempFirst;
 int main()
 {
 
-    ////////////////////////////////////////MENU//////////////////
-
-    std::cout<<"Willkommen bei Snake v.1.2"<<std::endl;
-    std::cout<<std::endl;
-    std::cout<<"Um das Spiel zu starten tippe >start<."<<std::endl;
-    std::cout<<"Die Schwierigkeit kann mit >leicht<,>mittel< und >schwer< eingegeben werden."<<std::endl;
-
-    std::cout<<"Um die Optionen erneut auszugeben tippe >hilfe< ein."<<std::endl;
-
-    while(choice!="start")
-    {
-        std::cin >> choice;
-        if(choice=="leicht")
-        {
-            difficulty=1;
-            std::cout<<"Schwierigkeit auf LEICHT gesetzt"<<std::endl;
-        }
-        else if(choice=="mittel")
-        {
-            difficulty=2;
-            std::cout<<"Schwierigkeit auf MITTEL gesetzt"<<std::endl;
-        }
-        else if(choice=="schwer")
-        {
-            difficulty=4;
-            std::cout<<"Schwierigkeit auf SCHWER gesetzt"<<std::endl;
-        }
-        else if(choice=="hilfe")
-        {
-            std::cout<<"Um das Spiel zu starten tippe >start<."<<std::endl;
-            std::cout<<"Die Schwierigkeit kann mit >leicht<,>mittel< und >schwer< eingegeben werden."<<std::endl;
-        }
-        else{
-            std::cout<<"Keine Gültige Eingabe"<<std::endl;
-        }
-    }
-
-
-
-
-    //////////////////////////////////////////////////////////////
-
-
+    difficulty=startGameMenue();
 
 
     // glfw: initialize and configure
@@ -337,38 +296,7 @@ int main()
 
         ////////////////////////////////////////MENU//////////////////
 
-    std::cout<<"Gratuliere du hast: "<<points<<" Punkte gesammelt!"<<std::endl;
-    std::cout<<std::endl;
-    std::cout<<"Um das neu zu starten tippe >start<."<<std::endl;
-    std::cout<<"Um das Spiel zu beenden tippe >exit<"<<std::endl;
-
-    std::cout<<"Um die Optionen erneut auszugeben tippe >hilfe< ein."<<std::endl;
-
-    while(choice!="exit")
-    {
-        std::cin >> choice;
-        if(choice=="start")
-        {
-            difficulty=1;
-            std::cout<<"NOCH NICHT IMPLEMENTIERT"<<std::endl;
-        }
-
-        else if(choice=="hilfe")
-        {
-            std::cout<<"Um das neu zu starten tippe >start<."<<std::endl;
-            std::cout<<"Um das Spiel zu beenden tippe >exit<"<<std::endl;
-
-            std::cout<<"Um die Optionen erneut auszugeben tippe >hilfe< ein."<<std::endl;
-        }
-        else if(choice=="exit")
-        {
-            std::cout<<"Aufwiedersehen!"<<std::endl;
-        }
-        else{
-            std::cout<<"Keine Gültige Eingabe"<<std::endl;
-        }
-    }
-
+    endGameMenu(points);
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
 
@@ -413,8 +341,14 @@ void processInput(GLFWwindow *window)
 
 void snakeMovement()
 {
-    if(snake_movement_flag){
-        snakeTail();
+    if(snake_movement_flag)
+    {
+        for(unsigned int i=cubePositions.size();i>1;i--)
+        {
+            cubePositions[i][0]=cubePositions[i-1][0];
+            cubePositions[i][1]=cubePositions[i-1][1];
+            cubePositions[i][2]=cubePositions[i-1][2];
+        }
         switch(snake_movement_direction)
         {
             case 0 : cubePositions[1][0]=cubePositions[1][0]+1;
@@ -426,16 +360,6 @@ void snakeMovement()
             case 3 : cubePositions[1][1]=cubePositions[1][1]-1;
 
         }
-    }
-}
-
-void snakeTail(){
-
-    for(unsigned int i=cubePositions.size();i>1;i--)
-    {
-        cubePositions[i][0]=cubePositions[i-1][0];
-        cubePositions[i][1]=cubePositions[i-1][1];
-        cubePositions[i][2]=cubePositions[i-1][2];
     }
 }
 
