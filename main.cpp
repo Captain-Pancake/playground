@@ -28,7 +28,9 @@ extern void gameOverCheck(GLFWwindow* window,std::vector<glm::vec3> cubePosition
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-
+int points = 0;
+int difficulty = 2;             //4 schwer, 2,mittel, 1 leicht
+std::string choice = " ";
 BOOLEAN snake_movement_flag = false;
 short snake_movement_direction=1; //0 rechts, 1 hoch, 2 links, 3 runter
 glm::vec3 tempFirst;
@@ -50,6 +52,52 @@ glm::vec3 tempFirst;
 
 int main()
 {
+
+    ////////////////////////////////////////MENU//////////////////
+
+    std::cout<<"Willkommen bei Snake v.1.2"<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<"Um das Spiel zu starten tippe >start<."<<std::endl;
+    std::cout<<"Die Schwierigkeit kann mit >leicht<,>mittel< und >schwer< eingegeben werden."<<std::endl;
+
+    std::cout<<"Um die Optionen erneut auszugeben tippe >hilfe< ein."<<std::endl;
+
+    while(choice!="start")
+    {
+        std::cin >> choice;
+        if(choice=="leicht")
+        {
+            difficulty=1;
+            std::cout<<"Schwierigkeit auf LEICHT gesetzt"<<std::endl;
+        }
+        else if(choice=="mittel")
+        {
+            difficulty=2;
+            std::cout<<"Schwierigkeit auf MITTEL gesetzt"<<std::endl;
+        }
+        else if(choice=="schwer")
+        {
+            difficulty=4;
+            std::cout<<"Schwierigkeit auf SCHWER gesetzt"<<std::endl;
+        }
+        else if(choice=="hilfe")
+        {
+            std::cout<<"Um das Spiel zu starten tippe >start<."<<std::endl;
+            std::cout<<"Die Schwierigkeit kann mit >leicht<,>mittel< und >schwer< eingegeben werden."<<std::endl;
+        }
+        else{
+            std::cout<<"Keine Gültige Eingabe"<<std::endl;
+        }
+    }
+
+
+
+
+    //////////////////////////////////////////////////////////////
+
+
+
+
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -59,7 +107,7 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Snake v.1.2", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -207,7 +255,6 @@ int main()
     ourShader.setInt("texture1", 0);
     ourShader.setInt("texture2", 1);
 
-
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -229,7 +276,7 @@ int main()
 
         //activate shader
         ourShader.use();
-        if(counter%5 == 0)
+        if(counter%(20/difficulty) == 0)
         {
             snakeMovement();
         }
@@ -286,12 +333,45 @@ int main()
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
+        glfwTerminate();
 
-    std::cout<<0<<std::endl;
+        ////////////////////////////////////////MENU//////////////////
+
+    std::cout<<"Gratuliere du hast: "<<points<<" Punkte gesammelt!"<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<"Um das neu zu starten tippe >start<."<<std::endl;
+    std::cout<<"Um das Spiel zu beenden tippe >exit<"<<std::endl;
+
+    std::cout<<"Um die Optionen erneut auszugeben tippe >hilfe< ein."<<std::endl;
+
+    while(choice!="exit")
+    {
+        std::cin >> choice;
+        if(choice=="start")
+        {
+            difficulty=1;
+            std::cout<<"NOCH NICHT IMPLEMENTIERT"<<std::endl;
+        }
+
+        else if(choice=="hilfe")
+        {
+            std::cout<<"Um das neu zu starten tippe >start<."<<std::endl;
+            std::cout<<"Um das Spiel zu beenden tippe >exit<"<<std::endl;
+
+            std::cout<<"Um die Optionen erneut auszugeben tippe >hilfe< ein."<<std::endl;
+        }
+        else if(choice=="exit")
+        {
+            std::cout<<"Aufwiedersehen!"<<std::endl;
+        }
+        else{
+            std::cout<<"Keine Gültige Eingabe"<<std::endl;
+        }
+    }
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
-    glfwTerminate();
+
     return 0;
 }
 
@@ -369,6 +449,7 @@ void snakeEatsTreat(){
         cubePositions[0][2]=0.0f;
 
         cubePositions.push_back(glm::vec3(0.0f,40.0f,0.0f));
+        points++;
     }
 }
 

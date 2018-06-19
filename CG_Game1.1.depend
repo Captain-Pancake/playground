@@ -172,7 +172,7 @@
 	<inttypes.h>
 	<stdint.h>
 
-1529335153 source:d:\studium\sose18\computer graphic\playground2\playground\main.cpp
+1529405524 source:d:\studium\sose18\computer graphic\playground2\playground\main.cpp
 	<glad/glad.h>
 	<GLFW/glfw3.h>
 	<stb_image.h>
@@ -185,6 +185,7 @@
 	<vector>
 	<iostream>
 	<random>
+	"game.h"
 
 1528754700 d:\studium\sose18\computer graphic\playground2\playground\include\glfw\glfw3.h
 	<stddef.h>
@@ -1834,5 +1835,16 @@
 	<glm/gtc/type_ptr.hpp>
 
 1529346954 source:d:\studium\sose18\computer graphic\game\playground2\src\game.cpp
+	"game.h"
+
+1529404234 d:\studium\sose18\computer graphic\playground2\playground\include\game.h
+	<glad/glad.h>
+	<GLFW/glfw3.h>
+	<vector>
+	<glm/glm.hpp>
+	<glm/gtc/matrix_transform.hpp>
+	<glm/gtc/type_ptr.hpp>
+
+1529404234 source:d:\studium\sose18\computer graphic\playground2\playground\src\game.cpp
 	"game.h"
 
