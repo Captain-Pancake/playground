@@ -12,6 +12,8 @@
 #include <thread>
 #include <chrono>
 #include <vector>
+#include <windows.h>
+#include <mmsystem.h>
 
 #include <iostream>
 #include <random>
@@ -295,7 +297,7 @@ int main()
         glfwTerminate();
 
         ////////////////////////////////////////MENU//////////////////
-
+    PlaySound(TEXT("sound/doh.wav"), NULL, SND_ASYNC);
     endGameMenu(points);
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
@@ -374,6 +376,7 @@ void snakeEatsTreat(){
 
         cubePositions.push_back(glm::vec3(0.0f,40.0f,0.0f));
         points++;
+        PlaySound(TEXT("sound/eat.wav"), NULL, SND_ASYNC);
     }
 }
 

@@ -24,6 +24,7 @@ if(cubePositions[1][0]>23||cubePositions[1][0]<-23||cubePositions[1][1]>17||cube
         if(cubePositions[1]==cubePositions[i])
         {
           glfwSetWindowShouldClose(window, true);
+
         }
     }
 }

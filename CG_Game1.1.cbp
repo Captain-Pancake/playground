@@ -56,6 +56,7 @@
 			<Add library="exLibs/lib-mingw/libglfw3dll.a" />
 			<Add library="glu32" />
 			<Add library="opengl32" />
+			<Add library="exLibs/libwinmm.a" />
 			<Add directory="exLibs/glew-2.0.0/bin/Release/Win32" />
 			<Add directory="exLibs/glu" />
 			<Add directory="exLibs/lib-mingw" />
