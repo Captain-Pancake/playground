@@ -1,4 +1,3 @@
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #define STB_IMAGE_IMPLEMENTATION
@@ -33,70 +32,64 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 int points = 0;
 int difficulty = 2;             //4 schwer, 2,mittel, 1 leicht
-std::string choice = " ";
-BOOLEAN snake_movement_flag = false;
 short snake_movement_direction=1; //0 rechts, 1 hoch, 2 links, 3 runter
-glm::vec3 tempFirst;
+BOOLEAN snake_movement_flag = false;
 
 
-        std::vector<glm::vec3> cubePositions = {
-        glm::vec3( 0.0f,  2.0f, 0.0f),
-        glm::vec3( 0.0f,  0.0f,  0.0f),
-        glm::vec3( 2.0f,  0.0f,  0.0f),
-        glm::vec3( 4.0f,  0.0f,  0.0f),
-        glm::vec3( 6.0f,  0.0f,  0.0f),
-        glm::vec3( 8.0f,  0.0f,  0.0f),
-        glm::vec3( 10.0f,  0.0f,  0.0f),
-        glm::vec3( 12.0f,  0.0f,  0.0f),
-        glm::vec3( 14.0f,  0.0f,  0.0f),
-        glm::vec3( 16.0f,  0.0f,  0.0f),
-        glm::vec3( 18.0f,  0.0f,  0.0f)
-    };
+
+std::vector<glm::vec3> cubePositions = {
+    glm::vec3( 0.0f,  2.0f, 0.0f),
+    glm::vec3( 0.0f,  0.0f,  0.0f),
+    glm::vec3( 1.0f,  0.0f,  0.0f),
+    glm::vec3( 2.0f,  0.0f,  0.0f),
+    glm::vec3( 3.0f,  0.0f,  0.0f),
+    glm::vec3( 4.0f,  0.0f,  0.0f),
+    glm::vec3( 5.0f,  0.0f,  0.0f),
+    glm::vec3( 6.0f,  0.0f,  0.0f),
+    glm::vec3( 7.0f,  0.0f,  0.0f),
+    glm::vec3( 8.0f,  0.0f,  0.0f),
+    glm::vec3( 9.0f,  0.0f,  0.0f)
+};
 
 int main()
 {
+    int counter=0;
+    std::string choice = " ";
 
     difficulty=startGameMenue();
 
-
-    // glfw: initialize and configure
-    // ------------------------------
+    // GLFW Initalisieren und konfigurieren
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    // glfw window creation
-    // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Snake v.1.2", NULL, NULL);
+    // GLFW Fenster erstellen
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Snake v.2.1", NULL, NULL);
     if (window == NULL)
     {
-        std::cout << "Failed to create GLFW window" << std::endl;
+        std::cout << "Es konnte kein Fenster erstellt werden. \n WINDOW = NULL" << std::endl;
         glfwTerminate();
         return -1;
     }
+    //Erstelltes Fenster als aktives Objekt deklarieren.
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    // glad: load all OpenGL function pointers
-    // ---------------------------------------
+    // GLAD Bibliothek laden
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        std::cout << "Failed to initialize GLAD" << std::endl;
+        std::cout << "GLAD konnte nicht geladen werden." << std::endl;
         return -1;
     }
 
-    // configure global opengl state
-    // -----------------------------
+    //Global OpenGL Deklaration
     glEnable(GL_DEPTH_TEST);
 
-    // build and compile our shader zprogram
-    // ------------------------------------
+    // Aufruf der Methode zum einlesen, compilen und erstellen der Shader.
     Shader ourShader("coordinate_systems.vs", "coordinate_systems.fs");
 
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
-    int counter=0;
+    // Vertex Punkte           die hinteren beiden Werte dienen als Referenz für die Texturen
     float vertices[] = {
        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
          0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -142,7 +135,7 @@ int main()
     };
 
 
-
+    //Vertex Buffer Object, Vertex Array Objects
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -175,7 +168,7 @@ int main()
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    unsigned char *data = stbi_load("textures/dirt.jpg", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("textures/skin.jpeg", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -226,7 +219,7 @@ int main()
 
         // render
         // ------
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.99f, 0.98f, 0.77f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 
          // bind textures on corresponding texture units
@@ -236,7 +229,7 @@ int main()
         glBindTexture(GL_TEXTURE_2D, texture2);
 
         //activate shader
-        ourShader.use();
+        //ourShader.use();
         if(counter%(20/difficulty) == 0)
         {
             snakeMovement();
@@ -301,7 +294,6 @@ int main()
     endGameMenu(points);
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
-
     return 0;
 }
 
@@ -316,23 +308,35 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
     {
         //cubePositions[1][2]=cubePositions[1][2]-0.1;
-        snake_movement_direction=1;
+        if(snake_movement_direction!=3)
+        {
+            snake_movement_direction=1;
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
     {
         //cubePositions[1][2]=cubePositions[1][2]+0.1;
-        snake_movement_direction=3;
+        if(snake_movement_direction!=1)
+        {
+            snake_movement_direction=3;
+        }
     }
 
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
         //cubePositions[1][0]=cubePositions[1][0]-0.5;
-        snake_movement_direction=2;
+        if(snake_movement_direction!=0)
+        {
+            snake_movement_direction=2;
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
        // cubePositions[1][0]=cubePositions[1][0]+0.5;
-        snake_movement_direction=0;
+        if(snake_movement_direction!=2)
+        {
+            snake_movement_direction=0;
+        }
     }
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
     {
