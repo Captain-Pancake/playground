@@ -34,6 +34,7 @@ int points = 0;
 int difficulty = 2;             //4 schwer, 2,mittel, 1 leicht
 short snake_movement_direction=1; //0 rechts, 1 hoch, 2 links, 3 runter
 BOOLEAN snake_movement_flag = false;
+BOOLEAN presentation_mode = false;
 
 
 
@@ -77,8 +78,7 @@ int main()
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     // GLAD Bibliothek laden
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))    {
         std::cout << "GLAD konnte nicht geladen werden." << std::endl;
         return -1;
     }
@@ -307,7 +307,8 @@ void processInput(GLFWwindow *window)
         }
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
     {
-        //cubePositions[1][2]=cubePositions[1][2]-0.1;
+        if(presentation_mode){
+        cubePositions[1][2]=cubePositions[1][2]-0.1;}
         if(snake_movement_direction!=3)
         {
             snake_movement_direction=1;
@@ -315,7 +316,7 @@ void processInput(GLFWwindow *window)
     }
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
     {
-        //cubePositions[1][2]=cubePositions[1][2]+0.1;
+        if(presentation_mode){cubePositions[1][2]=cubePositions[1][2]+0.1;}
         if(snake_movement_direction!=1)
         {
             snake_movement_direction=3;
@@ -324,7 +325,7 @@ void processInput(GLFWwindow *window)
 
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
     {
-        //cubePositions[1][0]=cubePositions[1][0]-0.5;
+        if(presentation_mode){cubePositions[1][0]=cubePositions[1][0]-0.5;}
         if(snake_movement_direction!=0)
         {
             snake_movement_direction=2;
@@ -332,7 +333,7 @@ void processInput(GLFWwindow *window)
     }
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
     {
-       // cubePositions[1][0]=cubePositions[1][0]+0.5;
+       if(presentation_mode){cubePositions[1][0]=cubePositions[1][0]+0.5;}
         if(snake_movement_direction!=2)
         {
             snake_movement_direction=0;
